@@ -1,0 +1,154 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'CodeFalling/fcitx-vim-osx'
+Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'mhinz/vim-signify'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" >>> core vim config <<<
+set hls is ru sc ls=2 cursorline cursorcolumn
+set nu ai et ts=4 sw=4 sts=4
+set listchars=eol:$,tab:>-,trail:_,extends:>,precedes:<,nbsp:~
+autocmd FileType c,cc,cpp,cxx,h,hpp,hxx set cin cino=:0g0t0(sus
+autocmd FileType python setlocal indentkeys-=<:> indentkeys-=:
+syntax enable
+colo solarized
+set backspace=indent,eol,start
+" #key mapping
+let mapleader="\<Space>"
+nnoremap <silent> J :bprev<CR>
+nnoremap <silent> K :bnext<CR>
+
+" >>> iTerm related <<<
+" Change cursor shape between insert and normal mode in iTerm2.app
+"if $TERM_PROGRAM =~ "iTerm"
+    "let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    "let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+"endif
+
+" >>> vim-airline <<<
+"let g:airline_powerline_fonts = 0
+"let g:airline_symbols_ascii = 1
+"let g:airline_left_sep=''
+"let g:airline_right_sep=''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#buffer_idx_format = {
+            \ '0': '0 ',
+            \ '1': '1 ',
+            \ '2': '2 ',
+            \ '3': '3 ',
+            \ '4': '4 ',
+            \ '5': '5 ',
+            \ '6': '6 ',
+            \ '7': '7 ',
+            \ '8': '8 ',
+            \ '9': '9 '
+            \}
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>j <Plug>AirlineSelectPrevTab
+nmap <leader>k <Plug>AirlineSelectNextTab
+
+" >>> NERDTree <<<
+let NERDTreeIgnore = ['\~$', '\.o$[[file]]', '\.pyc$[[file]]']
+" #key mapping
+nnoremap <silent> <Leader>l :NERDTreeToggle<CR>
+
+" >>> YouCompleteMe <<<
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+" key mapping
+nnoremap <silent> <Leader>jj :YcmCompleter GoTo<CR>
+nnoremap <silent> <Leader>ji :YcmCompleter GoToInclude<CR>
+nnoremap <silent> <Leader>jd :YcmCompleter GoToDeclaration<CR>
+nnoremap <silent> <Leader>jD :YcmCompleter GoToDefinition<CR>
+nnoremap <silent> <Leader>gt :YcmCompleter GetType<CR>
+nnoremap <silent> <Leader>gp :YcmCompleter GetParent<CR>
+nnoremap <silent> <Leader>gd :YcmCompleter GetDoc<CR>
+nnoremap <silent> <Leader>yf :YcmCompleter FixIt<CR>
+
+" >>> CtrlP <<<
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth = 40
+let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
+
+" >>> Tagbar <<<
+" #key mapping
+nnoremap <silent> <Leader>tt :TagbarToggle<CR>
+nnoremap <silent> <Leader>tg :TagbarOpenAutoClose<CR>
+
+" >>> FSwitch <<<
+" #key mapping
+nnoremap <silent> <Leader>oo :FSHere<CR>
+nnoremap <silent> <Leader>oh :FSLeft<CR>
+nnoremap <silent> <Leader>oj :FSBelow<CR>
+nnoremap <silent> <Leader>ok :FSAbove<CR>
+nnoremap <silent> <Leader>ol :FSRight<CR>
+nnoremap <silent> <Leader>oH :FSSplitLeft<cr>
+nnoremap <silent> <Leader>oJ :FSSplitBelow<cr>
+nnoremap <silent> <Leader>oK :FSSplitAbove<cr>
+nnoremap <silent> <Leader>oL :FSSplitRight<cr>
+augroup mycppfiles
+    au BufEnter *.h let b:fswitchdst  = 'cpp,cc,c'
+    au BufEnter *.cc let b:fswitchdst  = 'h'
+    au BufEnter *.cc let b:fswitchlocs = 'reg:/src/include/,reg:|src|include/**|,../include'
+augroup END
